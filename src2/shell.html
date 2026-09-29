@@ -188,9 +188,9 @@ a.srcl { text-decoration: underline; text-decoration-color: rgba(138,86,52,.35);
 .beian:hover { color: var(--indigo); }
 @media (max-width: 640px) { #intro { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 38px); } }
 @media (max-height: 560px) {
-  /* 横屏矮屏：卡片按视口高度限高并可滚动（border-box 才能把内边距算进限高），底部留一行给备案号 */
-  #intro { padding-block: 8px 34px; }
-  .intro-card { box-sizing: border-box; max-height: calc(100vh - 42px); max-height: calc(100dvh - 42px); }
+  /* 矮屏（横屏或微信里的小屏手机）：保留安全区，卡片用 border-box 限高才不会超出屏幕，底部留一行给备案号 */
+  #intro { padding-block: calc(env(safe-area-inset-top, 0px) + 8px) calc(env(safe-area-inset-bottom, 0px) + 34px); }
+  .intro-card { box-sizing: border-box; max-height: 100%; }
 }
 
 /* 尾声 */
