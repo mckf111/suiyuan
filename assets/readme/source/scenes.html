@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>重游随园 · 游园六景</title>
+<link rel="stylesheet" href="common.css">
+<style>
+/* 1200×576：3×2 拼板，按游线顺序；景名样式照搬游戏里的到站竖排标题（#stitle） */
+body { width: 1200px; height: 576px; overflow: hidden; }
+.board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 24px; height: 100%; }
+.tile { position: relative; overflow: hidden; border-radius: 3px; box-shadow: 0 0 0 1px rgba(91,83,71,.35);
+  background-repeat: no-repeat; }
+.cap { position: absolute; left: 12px; top: 12px; display: flex; gap: 6px; align-items: flex-start; }
+.cap .n { writing-mode: vertical-rl; font-family: var(--brush); font-size: 15px; color: var(--seal-ink); background: var(--cinnabar);
+  padding: 6px 3px; letter-spacing: .1em; margin-top: 4px; }
+.cap .t { writing-mode: vertical-rl; font-family: var(--brush); font-size: 34px; line-height: 1.15; letter-spacing: .08em; color: var(--ink);
+  white-space: nowrap; text-shadow: 0 1px 10px rgba(246,240,225,.95), 0 0 3px rgba(246,240,225,.9), 0 0 1px rgba(246,240,225,1); }
+/* 原图 1920×1080；对白卡在画面下方：放大到卡片上沿落在格子之外（格子约 373×256） */
+.chaimen  { background-image: url("../../../公众号/k01_柴门.jpg");      background-size: 150% auto; background-position: 50% 28%; }
+.shanfang { background-image: url("../../../公众号/k03_小仓山房.jpg");  background-size: 150% auto; background-position: 45% 0%; }
+.shuanghu { background-image: url("../../../公众号/k04_双湖.jpg");      background-size: 118% auto; background-position: 40% 55%; }
+.xiangxue { background-image: url("../../../公众号/k06_香雪海.jpg");    background-size: 118% auto; background-position: 50% 45%; }
+.nanlou   { background-image: url("../../../公众号/k08_南楼望钟山.jpg"); background-size: 118% auto; background-position: 60% 60%; }
+.after    { background-image: url("../../../公众号/插图/图6_尾声1974.jpg"); background-size: 192% auto; background-position: 50% 0%; }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="tile chaimen"><div class="cap"><span class="n">第一处</span><span class="t">柴门</span></div></div>
+  <div class="tile shanfang"><div class="cap"><span class="n">第四处</span><span class="t">小仓山房</span></div></div>
+  <div class="tile shuanghu"><div class="cap"><span class="n">第九处</span><span class="t">双湖</span></div></div>
+  <div class="tile xiangxue"><div class="cap"><span class="n">第十处</span><span class="t">香雪海</span></div></div>
+  <div class="tile nanlou"><div class="cap"><span class="n">第十二处</span><span class="t">南楼</span></div></div>
+  <div class="tile after"><div class="cap"><span class="n">一九七四</span><span class="t">随园之后</span></div></div>
+</div>
+</body>
+</html>

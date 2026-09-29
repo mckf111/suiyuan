@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>重游随园 · README 头图</title>
+<link rel="stylesheet" href="common.css">
+<style>
+/* 以视口高度为单位排版：1200×500 出 README 头图，1280×640 出社交预览图 */
+body { width: 100vw; height: 100vh; overflow: hidden; }
+.stage { position: relative; width: 100%; height: 100%; overflow: hidden;
+  background: url("../../../公众号/k05_鸟瞰.jpg") 6vh 28% / auto 172% no-repeat; }
+/* 鸟瞰原图 1920×1080：按高度缩放，园子（双湖、梅林、南楼）落在右半 */
+.wash { position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(231,221,196,.97) 0%, rgba(231,221,196,.94) 30%, rgba(231,221,196,.72) 44%, rgba(231,221,196,0) 64%); }
+.frame { position: absolute; inset: 3.2vh; border: 1px solid rgba(91,83,71,.55); box-shadow: inset 0 0 0 1vh rgba(0,0,0,0), inset 0 0 0 calc(1vh + 1px) rgba(91,83,71,.25); pointer-events: none; }
+.title { position: absolute; left: 7vh; top: 50%; transform: translateY(-52%); }
+.name { display: flex; align-items: flex-start; gap: 3vh; }
+h1 { margin: 0; font-family: var(--brush); font-weight: 400; font-size: 25vh; line-height: 1; letter-spacing: .04em; color: var(--ink);
+  text-shadow: 0 0 3vh rgba(246,240,225,.8); white-space: nowrap; }
+.name .seal { font-size: 4.6vh; padding: 1.2vh 1.1vh 1vh; margin-top: 2.2vh; }
+.sub { margin: 4.6vh 0 0; font-size: 5.3vh; font-weight: 600; color: var(--ink); letter-spacing: .04em; }
+.meta { margin: 2.2vh 0 0; font-size: 4vh; color: var(--indigo); letter-spacing: .08em; }
+.meta b { font-weight: 400; color: var(--ink-3); margin: 0 .5em; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="wash"></div>
+  <div class="frame"></div>
+  <div class="title">
+    <div class="name"><h1>重游随园</h1><div class="seal">随<br>园</div></div>
+    <p class="sub">乾隆五十年仲春，跟袁枚走一遍南京消失的名园</p>
+    <p class="meta">浏览器 3D 游览<b>·</b>十三处景<b>·</b>五幕身后事</p>
+  </div>
+</div>
+</body>
+</html>
