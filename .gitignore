@@ -1,0 +1,19 @@
+# 大文件只留本地（短片与网站包另存 GitHub Release）
+*.mp4
+*.webm
+*.zip
+
+# 配音草稿（已弃用，不入库）
+/audio/
+
+# 构建产物与依赖
+/site/
+node_modules/
+__pycache__/
+
+# 剪辑中间文件
+/公众号/_tmp/
+
+Thumbs.db
+desktop.ini
+.DS_Store

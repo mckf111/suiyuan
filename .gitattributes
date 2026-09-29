@@ -1,0 +1,16 @@
+* text=auto eol=lf
+
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.gif binary
+*.mp3 binary
+*.wav binary
+*.mp4 binary
+*.webm binary
+*.woff2 binary
+*.zip binary
+
+# 配音清单给 Excel 用，保持原样（CRLF + BOM）
+*.csv -text
