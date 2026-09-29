@@ -138,6 +138,10 @@
 
 </details>
 
+<p align="center">
+  <a href="https://github.com/oil-oil/beautify-github-readme"><img src="assets/readme/made-with-beautify.svg" width="300" alt="README made with beautify-github-readme"></a>
+</p>
+
 ## 版权
 
 © 2026 曹文虎。**保留所有权利**：源码公开供查看，不授权复制、改编或再发布。欢迎个人非商业的截图、录屏分享，请注明《重游随园》与网址。详见 [LICENSE.md](LICENSE.md)。
