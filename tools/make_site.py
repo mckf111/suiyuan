@@ -85,6 +85,15 @@ open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8', newline='\n').write
 tot = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(OUT) for f in fs)
 print(f'site -> {OUT}  fonts {nfiles} files {nbytes/1e6:.1f}MB  total {tot/1e6:.1f}MB')
 
+# ---- 第三方许可声明（three.js MIT、字体 OFL、贴图 CC0）----
+notes = ['重游随园 · 第三方软件与素材许可声明\n本网站原创部分保留所有权利；以下第三方内容按其原许可证提供。\n']
+for title, lic in [('three.js 0.170.0（MIT）', os.path.join(THREE, 'LICENSE'))] + \
+        [(f'字体 @fontsource/{pkg}（SIL Open Font License 1.1）', f'{NM}/@fontsource/{pkg}/LICENSE')
+         for pkg in ['ma-shan-zheng', 'zcool-xiaowei', 'noto-serif-sc']]:
+    notes.append(f'\n==== {title} ====\n\n' + open(lic, encoding='utf-8').read().strip() + '\n')
+notes.append('\n==== 材质贴图 tex/（Poly Haven，CC0 1.0）====\n\nhttps://polyhaven.com/license\n')
+open(os.path.join(OUT, 'THIRD-PARTY-NOTICES.txt'), 'w', encoding='utf-8', newline='\n').write(''.join(notes))
+
 # ---- 打包 zip（路径统一用 /，根目录即 index.html）----
 zpath = OUT + '.zip'
 with zipfile.ZipFile(zpath, 'w', zipfile.ZIP_DEFLATED) as zf:
