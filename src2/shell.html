@@ -170,7 +170,7 @@ a.srcl { text-decoration: underline; text-decoration-color: rgba(138,86,52,.35);
 @media (max-width: 640px) {
   /* 手机：卡片可滚动、不超出屏幕；标题改横排放在上方，省出宽度 */
   #intro { align-items: flex-end; padding-block: calc(env(safe-area-inset-top, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 12px); }
-  .intro-card { flex-direction: column; gap: 10px; padding: 18px 18px 16px; max-height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .intro-card { box-sizing: border-box; flex-direction: column; gap: 10px; padding: 18px 18px 16px; max-height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .title-col { flex-direction: row; align-items: center; gap: 10px; }
   .title-v { font-size: 40px; }
   .title-v br { display: none; }
@@ -182,6 +182,16 @@ a.srcl { text-decoration: underline; text-decoration-color: rgba(138,86,52,.35);
   .intro-text .fine .pc { display: none; }
 }
 @media (max-height: 560px) { .intro-card { max-height: 100%; overflow-y: auto; } }
+/* 备案号：开场画面底部居中；手机和矮屏给卡片下方留出一行 */
+.beian { position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); pointer-events: auto;
+  font-size: 12px; line-height: 1.6; color: var(--ink-2); background: var(--silk-a); padding: 1px 10px; border-radius: 2px; text-decoration: none; white-space: nowrap; }
+.beian:hover { color: var(--indigo); }
+@media (max-width: 640px) { #intro { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 38px); } }
+@media (max-height: 560px) {
+  /* 横屏矮屏：卡片按视口高度限高并可滚动（border-box 才能把内边距算进限高），底部留一行给备案号 */
+  #intro { padding-block: 8px 34px; }
+  .intro-card { box-sizing: border-box; max-height: calc(100vh - 42px); max-height: calc(100dvh - 42px); }
+}
 
 /* 尾声 */
 #epi { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); width: min(700px, calc(100% - 2 * var(--gut)));
@@ -294,6 +304,7 @@ a.srcl { text-decoration: underline; text-decoration-color: rgba(138,86,52,.35);
       <div class="row"><button class="primary" id="enter" type="button" disabled>铺陈园景……</button><button class="link" id="intro-src" type="button">先看出处</button></div>
     </div>
   </div>
+  <a class="beian" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">苏ICP备2024089758号-1</a>
 </section>
 
 <section id="epi" hidden aria-live="polite">
