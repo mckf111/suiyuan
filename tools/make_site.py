@@ -1,14 +1,22 @@
 # 生成可直接部署的静态网站包（EdgeOne Pages / 任意静态托管）
 # - three.js 自托管，不依赖 jsdelivr
 # - 字体自托管，只带页面实际用到的字所在的分片（unicode-range 按需加载）
-# 用法：python3 make_site.py <输出目录> [站点网址]
-import os, re, sys, shutil, html
+# 用法：python tools/make_site.py [输出目录，默认 site/] [站点网址]
+# 依赖：先在项目根目录 npm ci（three.js 与字体按 package-lock.json 锁定的版本）
+# 输出：site/（可直接预览）和同名 site.zip（上传 EdgeOne 用，根目录即 index.html）
+import os, re, sys, shutil, html, zipfile
 
-SRC = os.path.dirname(os.path.abspath(__file__))
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(SRC, 'site')
+SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 项目根目录
+OUT = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.path.join(SRC, 'site'))
 URL = sys.argv[2] if len(sys.argv) > 2 else 'https://suiyuan.caowenhu.com/'
-NM = os.environ.get('NM', '/home/claude/deploy_npm/node_modules')
-THREE = os.environ.get('THREE', NM + '/three')
+NM = os.environ.get('NM', os.path.join(SRC, 'node_modules'))
+THREE = os.environ.get('THREE', os.path.join(NM, 'three'))
+
+# 删除保护：输出目录必须在项目内、不是项目根，且不存在或是上次生成的网站目录
+if os.path.commonpath([OUT, SRC]) != SRC or OUT == SRC:
+    sys.exit(f'拒绝：输出目录必须在项目文件夹内且不是项目根目录：{OUT}')
+if os.path.exists(OUT) and not os.path.isfile(os.path.join(OUT, 'index.html')):
+    sys.exit(f'拒绝：{OUT} 已存在但不像上次生成的网站目录（没有 index.html），不删除')
 
 page = open(os.path.join(SRC, 'suiyuan.html'), encoding='utf-8').read()
 if os.path.exists(OUT): shutil.rmtree(OUT)
@@ -45,7 +53,7 @@ for pkg, weights in [('ma-shan-zheng', [400]), ('zcool-xiaowei', [400]), ('noto-
             shutil.copy(f'{NM}/@fontsource/{pkg}/files/{f}', os.path.join(fdir, f)); nfiles += 1; nbytes += os.path.getsize(os.path.join(fdir, f))
             block = re.sub(r'src:[^;]+;', f"src: url(./{f}) format('woff2');", block)
             css_out.append(block)
-open(os.path.join(fdir, 'fonts.css'), 'w', encoding='utf-8').write('\n'.join(css_out))
+open(os.path.join(fdir, 'fonts.css'), 'w', encoding='utf-8', newline='\n').write('\n'.join(css_out))
 page = re.sub(r'<link rel="preconnect"[^>]*>\n?', '', page)
 page = re.sub(r'<link rel="stylesheet" href="https://fonts.googleapis.com[^"]*">', '<link rel="stylesheet" href="./fonts/fonts.css">', page)
 assert 'googleapis' not in page
@@ -72,7 +80,16 @@ head, rest = page[:body_start], page[body_start:]
 m = re.search(r'</style>\s*', rest)
 style, body = rest[:m.end()], rest[m.end():]
 doc = f'<!doctype html>\n<html lang="zh-CN">\n<head>\n{head}{head_extra}{style}</head>\n<body>\n{body}\n</body>\n</html>\n'
-open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(doc)
+open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8', newline='\n').write(doc)
 
 tot = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(OUT) for f in fs)
 print(f'site -> {OUT}  fonts {nfiles} files {nbytes/1e6:.1f}MB  total {tot/1e6:.1f}MB')
+
+# ---- 打包 zip（路径统一用 /，根目录即 index.html）----
+zpath = OUT + '.zip'
+with zipfile.ZipFile(zpath, 'w', zipfile.ZIP_DEFLATED) as zf:
+    for d, _, fs in os.walk(OUT):
+        for f in sorted(fs):
+            full = os.path.join(d, f)
+            zf.write(full, os.path.relpath(full, OUT).replace(os.sep, '/'))
+print(f'zip  -> {zpath}  {os.path.getsize(zpath)/1e6:.1f}MB')

@@ -1,0 +1,12 @@
+{
+  "name": "suiyuan",
+  "private": true,
+  "description": "重游随园 · 打包网站所需的第三方依赖（three.js 与字体）。先 npm ci，再 python tools/make_site.py",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@fontsource/ma-shan-zheng": "5.3.1",
+    "@fontsource/noto-serif-sc": "5.3.0",
+    "@fontsource/zcool-xiaowei": "5.3.0",
+    "three": "0.170.0"
+  }
+}
